@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery鼠标悬停上下翻滚动画导航菜单</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#menu2 li a").wrapInner( '<span class="out"></span>' );
+	$("#menu2 li a").each(function() {
+		$( '<span class="over">' +  $(this).text() + '</span>' ).appendTo( this );
+	});
+
+	$("#menu2 li a").hover(function() {
+		$(".out",	this).stop().animate({'top':	'48px'},	300); // move down - hide
+		$(".over",	this).stop().animate({'top':	'0px'},		300); // move down - show
+
+	}, function() {
+		$(".out",	this).stop().animate({'top':	'0px'},		300); // move up - show
+		$(".over",	this).stop().animate({'top':	'-48px'},	300); // move up - hide
+	});
+
+});
+</script>
+</head>
+<body class="keBody">
+<h1 class="keTitle">jQuery鼠标悬停上下翻滚动画导航菜单</h1>
+<div class="kePublic">
+<!--效果html开始-->
+<div id="menu2" class="menu">
+  <ul>
+    <li><a href="#">首 页</a></li>
+    <li><a href="#">预报预警</a></li>
+    <li><a href="#">气象新闻</a></li>
+    <li><a href="#">气象服务</a></li>
+    <li><a href="#">行政审批</a></li>
+    <li><a href="#">信息公开</a></li>
+    <li><a href="#">气象科普</a></li>
+    <li><a href="#">党风廉政</a></li>
+    <li><a href="#">气象科普</a></li>
+  </ul>
+  <div class="cls"></div>
+</div>
+<!--效果html结束-->
+<div class="clear"></div>
+</div>
+</body>
+</html>

@@ -118,10 +118,48 @@
 </template>
 
 <script>
-export default {}; 
+// 引入jQ模块
+import $ from "jquery";
+export default {
+  // 组件名字 不是必须的 写上会有更好的提示信息
+  // 传送门:https://cn.vuejs.org/v2/api/#name
+  name: "app",
+  // methods
+  // filters
+  // computed
+  // 组件渲染出来触发
+  // 传送门
+  mounted: function() {
+    $("#menu2 li a").wrapInner('<span class="out"></span>');
+    $("#menu2 li a").each(function() {
+      $('<span class="over">' + $(this).text() + "</span>").appendTo(this);
+    });
+    $("#menu2 li a").hover(
+      function() {
+        $(".out", this)
+          .stop()
+          .animate({ top: "48px" }, 300); // move down - hide
+        $(".over", this)
+          .stop()
+          .animate({ top: "0px" }, 300); // move down - show
+      },
+      function() {
+        $(".out", this)
+          .stop()
+          .animate({ top: "0px" }, 300); // move up - show
+        $(".over", this)
+          .stop()
+          .animate({ top: "-48px" }, 300); // move up - hide
+      }
+    );
+  }
+};
+
+
+
 </script>
 
-<style>
-  /* 标准的 css中导入其他css的语法 */
-  /* @import url('./assets/statics/site/css/style.css'); */
+<style scoped>
+/* 标准的 css中导入其他css的语法 */
+@import url("./assets/statics/lib/hoverNav/css/style.css");
 </style>

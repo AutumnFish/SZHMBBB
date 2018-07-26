@@ -13,114 +13,23 @@
                     <div class="left-220" style="margin: 0px;">
                         <div class="banner-nav">
                             <ul>
-                                <li>
+                                <li v-for="(item, index) in catelist" :key="item.id">
                                     <h3>
                                         <i class="iconfont icon-arrow-right"></i>
-                                        <span>手机数码</span>
+                                        <span>{{item.title}}</span>
                                         <p>
-                                            <span>
-                                                手机通讯&nbsp;
-                                            </span>
-                                            <span>
-                                                摄影摄像&nbsp;
-                                            </span>
-                                            <span>
-                                                存储设备&nbsp;
+                                            <span v-for="(itemSon, i) in item.subcates" :key="itemSon.id">
+                                                {{itemSon.title}}&nbsp;
                                             </span>
                                         </p>
                                     </h3>
                                     <div class="item-box">
                                         <dl>
                                             <dt>
-                                                <a href="/goods/40.html">手机数码</a>
+                                                <a href="/goods/40.html">{{item.title}}</a>
                                             </dt>
                                             <dd>
-                                                <a href="/goods/43.html">手机通讯</a>
-                                                <a href="/goods/43.html">摄影摄像</a>
-                                                <a href="/goods/43.html">存储设备</a>
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h3>
-                                        <i class="iconfont icon-arrow-right"></i>
-                                        <span>电脑办公</span>
-                                        <p>
-                                            <span>
-                                                电脑整机&nbsp;
-                                            </span>
-                                            <span>
-                                                外设产品&nbsp;
-                                            </span>
-                                            <span>
-                                                办公打印&nbsp;
-                                            </span>
-                                        </p>
-                                    </h3>
-                                    <div class="item-box">
-                                        <dl>
-                                            <dt>
-                                                <a href="/goods/40.html">电脑办公</a>
-                                            </dt>
-                                            <dd>
-                                                <a href="/goods/43.html">电脑整机</a>
-                                                <a href="/goods/43.html">外设产品</a>
-                                                <a href="/goods/43.html">办公打印</a>
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h3>
-                                        <i class="iconfont icon-arrow-right"></i>
-                                        <span>影音娱乐</span>
-                                        <p>
-                                            <span>
-                                                平板电视&nbsp;
-                                            </span>
-                                            <span>
-                                                音响DVD&nbsp;
-                                            </span>
-                                            <span>
-                                                影音配件&nbsp;
-                                            </span>
-                                        </p>
-                                    </h3>
-                                    <div class="item-box">
-                                        <dl>
-                                            <dt>
-                                                <a href="/goods/40.html">影音娱乐</a>
-                                            </dt>
-                                            <dd>
-                                                <a href="/goods/43.html">平板电视</a>
-                                                <a href="/goods/43.html">音响DVD</a>
-                                                <a href="/goods/43.html">影音配件</a>
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h3>
-                                        <i class="iconfont icon-arrow-right"></i>
-                                        <span>服装类</span>
-                                        <p>
-                                            <span>
-                                                男装&nbsp;
-                                            </span>
-                                            <span>
-                                                女装&nbsp;
-                                            </span>
-                                        </p>
-                                    </h3>
-                                    <div class="item-box">
-                                        <dl>
-                                            <dt>
-                                                <a href="/goods/40.html">服装类</a>
-                                            </dt>
-                                            <dd>
-                                                <a href="/goods/43.html">男装</a>
-                                                <a href="/goods/43.html">女装</a>
+                                                <a v-for="(itemSon, i) in item.subcates" :key="itemSon.id" href="/goods/43.html">{{itemSon.title}}</a>
                                             </dd>
                                         </dl>
                                     </div>
@@ -159,44 +68,14 @@
                     <!--/幻灯片-->
                     <div class="left-220">
                         <ul class="side-img-list">
-                            <li>
+                            <li v-for="(item, index) in toplist" :key="item.id">
                                 <div class="img-box">
-                                    <label>1</label>
-                                    <img src="http://39.108.135.214:8899/imgs/SJ4EgwosX0wTqvyAvhtFGT1w.jpg">
+                                    <label>{{index+1}}</label>
+                                    <img :src="item.img_url">
                                 </div>
                                 <div class="txt-box">
-                                    <a href="/goods/show-98.html">骆驼男装2017秋季新款运动休闲纯色夹克青年宽松长袖针织开衫卫衣</a>
-                                    <span>2017-09-26</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="img-box">
-                                    <label>2</label>
-                                    <img src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200314272543.jpg">
-                                </div>
-                                <div class="txt-box">
-                                    <a href="/goods/show-98.html">奔腾（BNTN） 380功放+纽约至尊 套装家庭影院</a>
-                                    <span>2015-04-20</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="img-box">
-                                    <label>3</label>
-                                    <img src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200318534459.jpg">
-                                </div>
-                                <div class="txt-box">
-                                    <a href="/goods/show-98.html">飞利浦（PHILIPS）DVP3690 全高清DVD影碟机播放器</a>
-                                    <span>2015-04-20</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="img-box">
-                                    <label>4</label>
-                                    <img src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200258403759.jpg">
-                                </div>
-                                <div class="txt-box">
-                                    <a href="/goods/show-98.html">三星（SAMSUNG）UA40HU5920JXXZ 40英寸4K超高清</a>
-                                    <span>2015-04-20</span>
+                                    <a href="/goods/show-98.html">{{item.title}}</a>
+                                    <span>{{item.add_time | cutTime }}</span>
                                 </div>
                             </li>
                         </ul>
@@ -586,12 +465,60 @@
     </div>
 </template>
 <script>
+// 导入模块
+import axios from 'axios';
+// 引入模块 moment
+import moment from 'moment';
+// 接口调用
+// http://47.106.148.205:8899/site/goods/gettopdata/goods
 export default {
-    
-}
+    // 数据
+    data:function(){
+        return {
+            catelist:[],
+            sliderlist:[],
+            toplist:[]
+        }
+    },
+    // 过滤器
+    filters:{
+        // 默认的切割方式 不够通用 
+        // 使用moment.js替换
+        cutTime(value){
+            // return value.slice(0,10);
+            // 使用moment.js进行替换
+            return moment(value).format('YYYY年MM月DD日')
+        }
+    },
+    // 即将显示时调用
+    beforeMount() {
+        // console.log('即将要显示了哦');
+        axios
+        .get("http://47.106.148.205:8899/site/goods/gettopdata/goods")
+        .then((response)=>{
+            // 保存数据
+            this.catelist = response.data.message.catelist;
+            this.sliderlist = response.data.message.sliderlist;
+            this.toplist = response.data.message.toplist;
+        })
+        .catch((error)=>{
+            // console.log(error);
+        })
+    },
+    // 显示出来调用
+    mounted() {
+        // console.log('index 显示了哦');
+        // axios.get("http://47.106.148.205:8899/site/goods/gettopdata/goods")
+        // .then((response)=>{
+        //     console.log(response);
+        // })
+        // .catch((error)=>{
+        //     console.log(error);
+        // })
+    },
+};
 </script>
 <style scoped>
-
 </style>
 
 
