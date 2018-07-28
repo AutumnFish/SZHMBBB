@@ -5,6 +5,7 @@
                 <span>当前位置：</span>
                 <a href="#/" class="router-link-active">首页</a> &gt;
                 <a href="#/site/goodslist" class="router-link-exact-active router-link-active">购物商城</a>
+                <Rate v-model="value"></Rate>
             </div>
         </div>
         <div class="section">
@@ -77,9 +78,10 @@
                 <div class="wrap-box">
                     <ul class="img-list">
                         <li v-for="(itemSon, i) in item.datas" :key="itemSon.artID">
-                            <a href="#/site/goodsinfo/87" class="">
+                            <!-- <router-link :to="'/goodsInfo?id='+itemSon.artID"> -->
+                            <router-link :to="'/goodsInfo/'+itemSon.artID">
                                 <div class="img-box">
-                                    <img data-loading="../assets/statics/img/01.gif"  v-lazy="itemSon.img_url" >
+                                    <img   v-lazy="itemSon.img_url" >
                                 </div>
                                 <div class="info">
                                     <h3>{{itemSon.artTitle}}</h3>
@@ -92,7 +94,7 @@
                                         </span>
                                     </p>
                                 </div>
-                            </a>
+                            </router-link>
                         </li>
                     </ul>
                 </div>
@@ -101,14 +103,8 @@
     </div>
 </template>
 <script>
-// 导入模块
-import axios from "axios";
-// 引入模块 moment
-import moment from "moment";
 
-// 抽取出来
-// const baseUrl ='http://127.0.0.1:8848';
-const baseUrl ='http://47.106.148.205:8899';
+
 
 
 // 接口调用
@@ -120,25 +116,16 @@ export default {
       catelist: [],
       sliderlist: [],
       toplist: [],
-      goodList:[]
+      goodList:[],
+      value:0
     };
-  },
-  // 过滤器
-  filters: {
-    // 默认的切割方式 不够通用
-    // 使用moment.js替换
-    cutTime(value) {
-      // return value.slice(0,10);
-      // 使用moment.js进行替换
-      return moment(value).format("YYYY年MM月DD日");
-    }
   },
   // 即将显示时调用
   beforeMount() {
     // console.log('即将要显示了哦');
     // 获取 顶部的数据
-    axios
-      .get(`${baseUrl}/site/goods/gettopdata/goods`)
+    this.axios
+      .get(`/site/goods/gettopdata/goods`)
       .then(response => {
         // 保存数据
         this.catelist = response.data.message.catelist;
@@ -150,7 +137,7 @@ export default {
     });
     
     // 获取底部的商品列表数据
-    axios.get(`${baseUrl}/site/goods/getgoodsgroup`)
+    this.axios.get(`/site/goods/getgoodsgroup`)
     .then((response)=>{
         console.log(response);
         this.goodList = response.data.message;
