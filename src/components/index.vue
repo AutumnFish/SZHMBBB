@@ -161,6 +161,10 @@ export default {
     // .catch((error)=>{
     //     console.log(error);
     // })
+  },
+created(){
+    console.log('index组件');
+      console.log(this.$store);
   }
 };
 </script>

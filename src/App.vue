@@ -23,11 +23,12 @@
                         <a>退出</a>
                         <strong>|</strong>
                     </span>
-                    <a href="" class="">
+                    <router-link to="/buyCar">
                         <i class="iconfont icon-cart"></i>购物车(
                         <span id="shoppingCartCount">
-                            <span>4</span>
-                        </span>)</a>
+                            <span>{{this.$store.getters.totalCount}}</span>
+                        </span>)
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -152,6 +153,10 @@ export default {
           .animate({ top: "-48px" }, 300); // move up - hide
       }
     );
+  },
+  // 创建出来声明周期函数
+  created(){
+      console.log(this.$store);
   }
 };
 

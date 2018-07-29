@@ -159,7 +159,7 @@
         <!-- 去顶部 -->
         <BackTop></BackTop>
         <!-- 陪伴他的图片 --> 
-        <img class="moveImg" v-if="imglist.length!=0" :src="imglist[0].original_path" alt="">
+        <img class="moveImg" v-if="imglist.length!=0" style="display:none" :src="imglist[0].original_path" alt="">
     </div>
 </template>
 <script>
@@ -318,7 +318,12 @@ export default {
         // console.log(offset);// top left
         $('.moveImg').show().addClass('move').css(offset).animate(cartOffset,1000,()=>{
             $('.moveImg').removeClass('move').hide();
-        })
+        });
+        // 修改vuex中的数据值 
+        this.$store.commit('buyGood',{
+            goodId:this.$route.params.id, // 商品id
+            goodNum:this.buyNum           // 购买的数量
+        });
     }
   },
   // 注册组件
@@ -337,6 +342,9 @@ export default {
     this.getgoodsInfo();
     // 获取评论信息
     this.getcomments();
+    // 打印vuex的值
+    console.log('goodsinfo组件')
+    console.log(this.$store);
   },
   // beforeMount
   beforeMount() {},
