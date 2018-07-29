@@ -29,16 +29,16 @@ axios.defaults.baseURL = 'http://47.106.148.205:8899';
 Vue.prototype.axios = axios;
 
 
-// 使用路由中间件
+// 使用路由中间件 $route
 Vue.use(VueRouter);
-// 使用ui中间件
+// 使用ui中间件 $message
 Vue.use(ElementUI);
 // 使用懒加载中间件
 Vue.use(VueLazyload,{
   // 图片当做资源来引入
   loading:require('./assets/statics/img/loading2.gif')
 });
-// 使用iView
+// 使用iView $Message
 Vue.use(iView);
 
 // 注册路由规则
@@ -52,6 +52,8 @@ const router = new VueRouter({
       component: index
     },
     {
+      // goodsInfo/:id 参数
+      // form表单中的 name属性
       path:"/goodsInfo/:id",
       component:goodsInfo
     }
