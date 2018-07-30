@@ -109,7 +109,7 @@
 
 // 接口调用
 // http://47.106.148.205:8899/site/goods/gettopdata/goods
-export default {
+export default { 
   // 数据
   data: function() {
     return {
