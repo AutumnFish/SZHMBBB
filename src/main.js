@@ -106,6 +106,7 @@ const store = new Vuex.Store({
   },
   mutations: {
     // info->{goodId:xx,goodNum:xxx}
+    // 有就累加 没有就 直接赋值
     buyGood(state, info) {
       if (state.buyList[info.goodId]) {
         // 解决字符串累加问题
@@ -119,6 +120,18 @@ const store = new Vuex.Store({
         // 需要使用 Vue.set(obj, 'newProp', 123) 替代
         Vue.set(state.buyList, info.goodId, parseInt(info.goodNum));
       }
+    },
+    // 直接更新 某个id对应的数值
+    // {goodId:xx,goodNum:xxx}
+    changeCount(state,info){
+      state.buyList[info.goodId] = info.goodNum;
+    },
+    // 根据id删除数据
+    delGoodById(state,id){
+      // 如何删除对象中的某个属性 delete obj[key]
+      // delete state.buyList[id];
+      // 告诉Vue我已经删除了这个属性
+      Vue.delete(state.buyList,id)
     }
   }
 })
