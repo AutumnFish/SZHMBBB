@@ -4,8 +4,10 @@ import App from "./App.vue";
 import VueRouter from "vue-router";
 // 引入index组件
 import index from "./components/index.vue";
-import goodsInfo from './components/goodsInfo.vue';
-import buyCar from './components/buyCar.vue';
+import goodsInfo from "./components/goodsInfo.vue";
+import buyCar from "./components/buyCar.vue";
+import payOrder from "./components/payOrder.vue";
+import login from "./components/login.vue";
 // 导入ui框架
 import ElementUI from "element-ui";
 // 导入css
@@ -19,21 +21,19 @@ import moment from "moment";
 // 导入 axios模块 目的是让所有组件都可以使用
 import axios from "axios";
 // 导入iViewUI框架
-import iView from 'iview';
-import 'iview/dist/styles/iview.css';
+import iView from "iview";
+import "iview/dist/styles/iview.css";
 // 导入Vuex
-import Vuex from 'vuex'
-
-
-
+import Vuex from "vuex";
 
 // 正常的服务器
-axios.defaults.baseURL = 'http://47.106.148.205:8899';
+axios.defaults.baseURL = "http://47.106.148.205:8899";
+// 设置带上cookie
+axios.defaults.withCredentials = true
 // 崩溃后的备用服务器
 // axios.defaults.baseURL = 'http://127.0.0.1:8848';
 // 挂载到Vue的原型上->Vue实例化出来的对象 共用 vue-resource this.$http
 Vue.prototype.axios = axios;
-
 
 // 使用路由中间件 $route
 Vue.use(VueRouter);
@@ -42,12 +42,12 @@ Vue.use(ElementUI);
 // 使用懒加载中间件
 Vue.use(VueLazyload, {
   // 图片当做资源来引入
-  loading: require('./assets/statics/img/loading2.gif')
+  loading: require("./assets/statics/img/loading2.gif")
 });
 // 使用iView $Message
 Vue.use(iView);
 // 使用Vuex
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 // 注册路由规则
 const router = new VueRouter({
@@ -71,26 +71,32 @@ const router = new VueRouter({
     {
       path: "/buyCar",
       component: buyCar
+    },
+    // 支付订单路由
+    {
+      path: "/payOrder",
+      component: payOrder
+    },
+    // 登录页路由
+    {
+      path: "/login",
+      component: login
     }
   ]
 });
 
-
-// 注册全局过滤器
-Vue.filter('cutTime', function (value) {
-  return moment(value).format("YYYY年MM月DD日");
-});
-
-// 判断数据是否存在
-let buyList = JSON.parse(window.localStorage.getItem('buyList'))||{};
-
 // 实例化一个 Vuex的 仓库
+let buyList = JSON.parse(window.localStorage.getItem("buyList")) || {};
 const store = new Vuex.Store({
   // 状态
   state: {
     // 数量
     // buyList: {}
-    buyList
+    buyList,
+    // 是否登陆
+    isLogin: false,
+    // 来的路由
+    fromPath:''
   },
   // 类似于computed的属性
   getters: {
@@ -123,18 +129,67 @@ const store = new Vuex.Store({
     },
     // 直接更新 某个id对应的数值
     // {goodId:xx,goodNum:xxx}
-    changeCount(state,info){
+    changeCount(state, info) {
       state.buyList[info.goodId] = info.goodNum;
     },
     // 根据id删除数据
-    delGoodById(state,id){
+    delGoodById(state, id) {
       // 如何删除对象中的某个属性 delete obj[key]
       // delete state.buyList[id];
       // 告诉Vue我已经删除了这个属性
-      Vue.delete(state.buyList,id)
+      Vue.delete(state.buyList, id);
+    },
+    // 修改登陆状态
+    changeLogin(state, isLogin) {
+      // 直接赋值
+      state.isLogin = isLogin;
+    },
+    // 修改来时的路由
+    rememberFromPath(state,path){
+      state.fromPath = path;
     }
   }
-})
+});
+
+
+// 注册路由守卫(每次路由跳转时 增加的过滤规则)
+// 🥖🥖🥖🥖🥖🥖🥖🥖🥖🥖
+router.beforeEach((to, from, next) => {
+  // 从哪来
+  // console.log(from);
+  // 保存数据
+  store.commit('rememberFromPath',from.path);
+  // 去订单支付页
+  if(to.path=='/payOrder'){
+    axios
+    .get("/site/account/islogin")
+    .then(response => {
+      console.log(response);
+      if (response.data.code == "nologin") {
+        console.log("没登录");
+        // 打到登录页
+        next('/login');
+      } else {
+        // 登陆了 继续执行即可
+        next();
+         
+      }
+    })
+    .catch(err => {
+      // console.log(err);
+    });
+  }else{
+    // 如果去的不是订单支付页 直接可以访问
+    next();
+  }
+});
+
+// 注册全局过滤器
+Vue.filter("cutTime", function(value) {
+  return moment(value).format("YYYY年MM月DD日");
+});
+
+ 
 
 
 Vue.config.productionTip = false;
@@ -151,8 +206,8 @@ new Vue({
 });
 
 // 注册一些逻辑
-window.onbeforeunload = function () {
+window.onbeforeunload = function() {
   // alert('onbeforeunload');
   // window.localStorage.setItem('onbeforeunload',123);
-  window.localStorage.setItem('buyList',JSON.stringify(store.state.buyList));
-}
+  window.localStorage.setItem("buyList", JSON.stringify(store.state.buyList));
+};

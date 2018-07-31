@@ -107,7 +107,9 @@
                     <div class="cart-foot clearfix">
                         <div class="right-box">
                             <button class="button" onclick="javascript:location.href='/index.html';">继续购物</button>
-                            <button class="submit" onclick="formSubmit(this, '/', '/shopping.html');">立即结算</button>
+                            <router-link to="/payOrder">
+                                <button class="submit">立即结算</button>
+                            </router-link>
                         </div>
                     </div>
                     <!--购物车底部-->
