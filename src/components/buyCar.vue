@@ -82,7 +82,9 @@
                                     </td>
                                     <td width="84" align="left">{{item.sell_price}}</td>
                                     <td width="104" align="center">
-                                        <el-input-number v-model="item.buycount" @change="countChange($event,index)" size="mini" :min="1" :max="10" label="描述文字"></el-input-number>
+                                        <!-- <el-input-number v-model="item.buycount" @change="countChange($event,index)" size="mini" :min="1" :max="10" label="描述文字"></el-input-number> -->
+                                        <!-- 使用自己的组件进行替代 -->
+                                        <numControl @change="change($event,index)" :count="item.buycount" :max="10" :min="1"></numControl>
                                     </td>
                                     <td width="104" align="left">{{item.buycount*item.sell_price}}</td>
                                     <td width="54" align="center">
@@ -135,6 +137,8 @@
     </div>
 </template>
 <script>
+// 使用自己的组件 先引入
+import numControl from "./buyCar_component";
 export default {
   name: "buyCar",
   data: function() {
@@ -204,7 +208,7 @@ export default {
       // 定义变量
       let totalCount = 0;
       // 非空判断
-      if(this.message==undefined) return totalCount;
+      if (this.message == undefined) return totalCount;
       this.message.forEach(v => {
         if (v.isSelected) totalCount += v.buycount;
       });
@@ -214,7 +218,7 @@ export default {
     totalPrice() {
       // 是否选中
       let price = 0;
-      if(this.message==undefined) return price;
+      if (this.message == undefined) return price;
       // 累加金额 数量 价格
       this.message.forEach(v => {
         if (v.isSelected) price += v.buycount * v.sell_price;
@@ -224,16 +228,6 @@ export default {
   },
   // 方法
   methods: {
-    // value 是新的数字  index 索引
-    countChange(value, index) {
-      //   console.log(value);
-      // 修改vuex 这个id 对应的数据
-      // console.log(value,index);
-      this.$store.commit("changeCount", {
-        goodId: this.message[index].id,
-        goodNum: value
-      });
-    },
     // 删除数据
     del() {
       console.log(this.delIndex);
@@ -243,7 +237,23 @@ export default {
       this.message.splice(this.delIndex, 1);
       // 修改标示变量
       this.showModal = false;
+    },
+    // 改变
+    change(count,index){
+        // console.log('改变了');
+        // console.log(count,index);
+        // 修改当前这个组件中的数据
+        this.message[index].buycount = count;
+        // 修改保存在 Vuex中的数据
+        this.$store.commit('changeCount',{
+            goodId:this.message[index].id,
+            goodNum:count
+        })
     }
+  },
+  // 注册组件
+  components: {
+    numControl
   }
 };
 </script>
